@@ -27,42 +27,26 @@ export default {
       body.to = body.to.split(",");
       if(body.cc && body.cc !== ''){
         body.cc = body.cc.split(",");
+      } else{
+        body.cc = []
       }
       if(body.bcc && body.bcc !== ''){
         body.bcc = body.bcc.split(",");
+      } else{
+        body.bcc = []
       }
-      this.sendUsingMailGun(body);
+      this.sendUsingSendGrid(body);
     },
 
     sendUsingMailGun : function(body){
       this.api.doApiRequest(URL_CONFIG['mailgun'].method, URL_CONFIG['mailgun'].url+'/send',body).then((response) => {
-        console.log(response);
+        this.isSending = false;
         if (response && response.statusCode && response.statusCode.toString().toLowerCase() === "200") {
           this.alert= {
             class: CONSTANTS_CONFIG.SUCCESS_CLASS,
             heading: CONSTANTS_CONFIG.SUCCESS_HEADING,
             text: "Email Sent Successfully [ Mail Gun ].",
             icon  : 'fa-check'
-          };
-          this.$toastr.s(this.alert.text, this.alert.heading);
-          this.isSending = false;
-        } else{
-          this.sendUsingSendGrid(body);
-        }
-      }).catch((err) => {
-        this.sendUsingSendGrid(body);
-      });
-    },
-
-    sendUsingSendGrid : function(body){
-      this.api.doApiRequest(URL_CONFIG['sendgrid'].method, URL_CONFIG['sendgrid'].url+"/send",body).then((response) => {
-        this.isSending = false;
-        if (response && response.statusCode &&response.statusCode.toString().toLowerCase() === "200") {
-          this.alert= {
-            class: CONSTANTS_CONFIG.SUCCESS_CLASS,
-            heading: CONSTANTS_CONFIG.SUCCESS_HEADING,
-            text: "Email Sent Successfully [ SendGrid ].",
-            icon  : 'fa-check-circle'
           };
           this.$toastr.s(this.alert.text, this.alert.heading);
         } else{
@@ -75,7 +59,6 @@ export default {
           this.$toastr.e(this.alert.text, this.alert.heading);
         }
       }).catch((err) => {
-        this.isSending = false;
         this.alert= {
           class: CONSTANTS_CONFIG.ERROR_CLASS,
           heading: CONSTANTS_CONFIG.ERROR_HEADING,
@@ -83,6 +66,25 @@ export default {
           icon  : 'fa-info-circle'
         };
         this.$toastr.e(this.alert.text, this.alert.heading);
+      });
+    },
+
+    sendUsingSendGrid : function(body){
+      this.isSending = false;
+      this.api.doApiRequest(URL_CONFIG['sendgrid'].method, URL_CONFIG['sendgrid'].url+"/send",body).then((response) => {
+        if (response && response.statusCode &&response.statusCode.toString().toLowerCase() === "202") {
+          this.alert= {
+            class: CONSTANTS_CONFIG.SUCCESS_CLASS,
+            heading: CONSTANTS_CONFIG.SUCCESS_HEADING,
+            text: "Email Sent Successfully [ SendGrid ].",
+            icon  : 'fa-check-circle'
+          };
+          this.$toastr.s(this.alert.text, this.alert.heading);
+        } else{
+          this.sendUsingMailGun();
+        }
+      }).catch((err) => {
+        this.sendUsingMailGun();
       });
     },
 
