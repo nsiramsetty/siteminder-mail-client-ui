@@ -1,4 +1,4 @@
-# Westpac
+# Site Minder
 
 > Site Minder Technical Test - Mail Client - UI
 
