@@ -2,7 +2,7 @@
 
 > Site Minder Technical Test - Mail Client - UI
 
-> For Working Deployed Demo , Please visit : https://agitated-einstein-6271ce.netlify.com/
+> For Working Deployed Demo , Please visit : http://site-minder.s3-website-ap-southeast-2.amazonaws.com/
 
 ## Build Setup
 
