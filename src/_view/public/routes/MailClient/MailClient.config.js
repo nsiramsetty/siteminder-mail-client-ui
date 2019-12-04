@@ -1,10 +1,10 @@
 export const MAIL_CLIENT_CONFIG = {
     defaultEmailForm: {
-      to: 'naresh.siramsetty@gmail.com',
+      to: '',
       cc: '',
       bcc: '',
-      subject: "Test",
-      text: "Test"
+      subject: "",
+      text: ""
     },
     fieldsConfig: {
       to: {
