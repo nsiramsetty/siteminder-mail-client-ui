@@ -1,0 +1,120 @@
+<section class="mail-client">
+  <div class="row" v-if="isSending">
+    <div class="col-12">
+      <div class="alert alert-warning">
+        <span class="pull-left"><i class="fa fa-2x fa-spinner"> </i></span><h3>Sending</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row" v-if="!isSending && alert">
+    <div class="col-12">
+      <div class="alert" :class="alert.class">
+        <span class="pull-left"><i class="fa fa-2x" :class="alert.icon"> </i></span><h3>{{alert.text}}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <vue-form :state="emailFormState" @submit.prevent="submitEmailForm()">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <validate tag="" :custom="{'invalid': isValidEmail}">
+                <label for="to" v-bind:class="{'required' : fieldsConfig.to.isRequired}">{{fieldsConfig.to.label}}</label>
+                <input type="text" name="to" v-bind:required="fieldsConfig.to.isRequired"
+                       class="form-control" id="to"
+                       v-bind:placeholder="fieldsConfig.to.placeholder"
+                       v-model="emailForm.to">
+                <field-messages name="to" show="$touched">
+                  <div slot="required" class="alert alert-danger form-inline-error">{{fieldsConfig.to.messages.required}}</div>
+                  <div slot="invalid" class="alert alert-danger form-inline-error">{{fieldsConfig.to.messages.invalid}}</div>
+                </field-messages>
+              </validate>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <validate tag="" :custom="{'invalid': isValidEmail}">
+                <label for="cc" v-bind:class="{'required' : fieldsConfig.cc.isRequired}">{{fieldsConfig.cc.label}}</label>
+                <input type="text" name="cc"
+                       class="form-control" id="cc"
+                       v-bind:placeholder="fieldsConfig.cc.placeholder"
+                       v-model="emailForm.cc">
+                <field-messages name="cc" show="$touched">
+                  <div slot="invalid" class="alert alert-danger form-inline-error">{{fieldsConfig.cc.messages.invalid}}</div>
+                </field-messages>
+              </validate>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <validate tag="" :custom="{'invalid': isValidEmail}">
+                <label for="bcc" v-bind:class="{'required' : fieldsConfig.bcc.isRequired}">{{fieldsConfig.bcc.label}}</label>
+                <input type="text" name="bcc"
+                       class="form-control" id="bcc"
+                       v-bind:placeholder="fieldsConfig.bcc.placeholder"
+                       v-model="emailForm.bcc">
+                <field-messages name="bcc" show="$touched">
+                  <div slot="invalid" class="alert alert-danger form-inline-error">{{fieldsConfig.bcc.messages.invalid}}</div>
+                </field-messages>
+              </validate>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <validate tag="">
+                <label for="subject" v-bind:class="{'required' : fieldsConfig.subject.isRequired}">{{fieldsConfig.subject.label}}</label>
+                <input type="text" name="subject" v-bind:required="fieldsConfig.subject.isRequired"
+                       class="form-control" id="subject"
+                       v-bind:placeholder="fieldsConfig.subject.placeholder"
+                       v-model="emailForm.subject">
+                <field-messages name="subject" show="$touched">
+                  <div slot="required" class="alert alert-danger form-inline-error">{{fieldsConfig.subject.messages.required}}</div>
+                </field-messages>
+              </validate>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <validate tag="">
+                <label for="text" v-bind:class="{'required' : fieldsConfig.text.isRequired}">{{fieldsConfig.text.label}}</label>
+                <textarea name="text" v-bind:required="fieldsConfig.text.isRequired"
+                          class="form-control" id="text"
+                          v-bind:placeholder="fieldsConfig.text.placeholder"
+                          rows ="5"
+                          v-model="emailForm.text"></textarea>
+                <field-messages name="text" show="$touched">
+                  <div slot="required" class="alert alert-danger form-inline-error">{{fieldsConfig.text.messages.required}}</div>
+                </field-messages>
+              </validate>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <button type="reset" class="btn btn-default mt-4 full-width" :disabled="isSending" v-on:click="resetEmailForm()">Reset Values
+            </button>
+          </div>
+          <div class="col-6">
+            <button type="submit" class="btn btn-primary mt-4 full-width" v-bind:disabled="emailFormState.$invalid || isSending">Submit</button>
+          </div>
+        </div>
+      </vue-form>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="alert alert-info">
+        <p class="small text-center"><strong>Designed & Developed by Naresh Siramsetty</strong><br>Version : {{buildNumber}}</p>
+      </div>
+    </div>
+  </div>
+</section>
