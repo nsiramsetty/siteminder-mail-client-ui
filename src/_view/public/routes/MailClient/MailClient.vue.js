@@ -93,7 +93,7 @@ export default {
         let emailSplit = val.split(",");
         let isValid = true;
         emailSplit.forEach((email)=>{
-          if(!this.validateEmail(email)){
+          if(!this.validateEmail(email.trim())){
             isValid = false;
           }
         });
