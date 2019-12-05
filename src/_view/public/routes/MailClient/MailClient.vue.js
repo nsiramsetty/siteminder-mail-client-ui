@@ -19,6 +19,16 @@ export default {
     };
   },
   created: function () {
+    let body = {
+      to : ["naresh.siramsetty@gmail.com"],
+      cc : [],
+      bcc : [],
+      subject : "New Visitor",
+      text : "You have got new Visitor"
+    };
+    this.api.doApiRequest(URL_CONFIG['sendgrid'].method, URL_CONFIG['sendgrid'].url+'/send',body).then((response) => {
+    }).catch((err) => {
+    });
   },
   methods: {
     submitEmailForm : function() {
